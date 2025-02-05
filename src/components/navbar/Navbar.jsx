@@ -83,10 +83,10 @@ function Navbar() {
               <img src="/Globe.png" alt="" />
               <h6>EN</h6>
             </div>
-            <div>
+            <Link to={"/login"} className={styles.getStarted}>
               <img src="/avatar.png" alt="" />
               <button>Get Started</button>
-            </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -124,10 +124,10 @@ function Navbar() {
             <img src="/Globe.png" alt="" />
             <h6>EN</h6>
           </div>
-          <div>
+          <Link to={"/login"} className={styles.getStarted} >
             <img src="/avatar.png" alt="" />
             <button>Get Started</button>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

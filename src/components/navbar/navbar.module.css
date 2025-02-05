@@ -110,7 +110,7 @@
     align-items: center;
     gap: 50px;
 
-    div {
+    div,.getStarted {
         display: flex;
         align-items: center;
         gap: 6px;
