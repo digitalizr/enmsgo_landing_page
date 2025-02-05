@@ -11,7 +11,7 @@ function Navbar() {
     <div className={styles.navbarContainer}>
       {/* Logo */}
       <NavLink to="/" className={styles.logocontainer}>
-        <img src="/public/logo1.png" alt="" srcset="" />
+        <img src="/logo1.png" alt="" srcset="" />
         <span>ENMSgo</span>
       </NavLink>
       {/* MOBILE MENU */}

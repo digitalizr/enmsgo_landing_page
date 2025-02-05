@@ -8,7 +8,6 @@
 
 .viewHeading {
     font-size: 30px;
-    letter-spacing: 1;
     font-weight: 700;
     color: #ffffff;
     text-align: center;
@@ -21,52 +20,40 @@
     text-align: center;
 }
 
-.buttonContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* flex-wrap: wrap; */
-    gap: 50px;
-    margin-top: 20px;
+.buttonWrapper {
+    padding: 0 10px;
+    margin: 30px 0;
 }
 
-.activeButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+.activeButton,
+.inactiveButton {
     background-color: #65558F;
     color: white;
     border: none;
     padding: 10px 15px;
     cursor: pointer;
     border-radius: 8px;
+    width: 100%;
 }
 
-
 .inactiveButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
     background-color: #65558F;
     color: black;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 8px;
     transition: all 0.5s ease-in;
 }
 
 .inactiveButton:hover {
-    transition: all 0.5s ease-in;
     color: white;
+}
+
+
+.btnWrapper {
+    display: flex;
+    justify-content: center;
 }
 
 .imageContainer {
     margin-top: 20px;
-    justify-content: center;
-    align-items: center;
     width: 100%;
     margin: 20px auto;
     flex: 1;
@@ -80,11 +67,10 @@
     height: 500px;
 }
 
-@media screen and (max-width : 850px) {
-    .buttonContainer {
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        gap: 30px;
+@media screen and (max-width : 900px) {
+
+    .activeButton,
+    .inactiveButton {
+        font-size: 12px;
     }
 }
