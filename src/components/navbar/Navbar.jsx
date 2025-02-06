@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import { Link, NavLink } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useSelector, useDispatch } from "react-redux";
 
 // pgl wo h jo roz same kaam kre aur kahe nateeja alag ho
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  // redux auth value
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   return (
     <div className={styles.navbarContainer}>
       {/* Logo */}
       <NavLink to="/" className={styles.logocontainer}>
-        <img src="/logo1.png" alt="" srcset="" />
+        <img src="/logo1.png" alt="logo" />
         <span>ENMSgo</span>
       </NavLink>
       {/* MOBILE MENU */}
@@ -84,7 +90,7 @@ function Navbar() {
               <h6>EN</h6>
             </div>
             <Link to={"/login"} className={styles.getStarted}>
-              <img src="/avatar.png" alt="" />
+              <img src={ user?.photoURL   || "/avatar.png"} alt="userimg" />
               <button>Get Started</button>
             </Link>
           </div>
@@ -124,8 +130,8 @@ function Navbar() {
             <img src="/Globe.png" alt="" />
             <h6>EN</h6>
           </div>
-          <Link to={"/login"} className={styles.getStarted} >
-            <img src="/avatar.png" alt="" />
+          <Link to={"/login"} className={styles.getStarted}>
+            <img src={user?.photoURL || "/avatar.png"} alt="userimg" />
             <button>Get Started</button>
           </Link>
         </div>

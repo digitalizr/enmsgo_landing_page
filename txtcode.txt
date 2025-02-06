@@ -1,0 +1,226 @@
+import React, { useState } from "react";
+import styles from "../styles/login.module.css";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { FaGoogle } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import {
+  doSignInWithGoogle,
+  doSignInWithEmail,
+  doSignInWithEmailAndPassword,
+  doCreateUserWithEmailAndPassword,
+} from "../config/auth";
+
+import Cookies from "js-cookie";
+import { useSelector, useDispatch } from "react-redux";
+import { setAuth, clearAuth } from "../redux/features/authSlice";
+
+const LoginPage = () => {
+  const [showPassword, setshowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // redux auth value
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+
+  // dispatch function to call the action defined in the redux store
+  const dispatch = useDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    try {
+      // to sign in using email with verification
+      setLoading(true);
+      doSignInWithEmail(email);
+    } catch (error) {
+      console.log("Something went wrong : ", error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+
+    // to signin using email and password
+    // try {
+    //   setLoading(true);
+    //   await doSignInWithEmailAndPassword(email, password);
+    // } catch (error) {
+    //   console.log("Something went wrong : ", error);
+    //   setLoading(false);
+    // } finally {
+    //   setLoading(false);
+    // }
+  };
+
+  const onGoogleSignIn = (e) => {
+    try {
+      setLoading(true);
+      doSignInWithGoogle();
+    } catch (error) {
+      setLoading(false);
+      console.log("Something went wrong : ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className={styles.authcontainer}>
+      <form onSubmit={handleSubmit}>
+        <div className={styles.inputcontainer}>
+          <label htmlFor="username">Email : </label>
+          <input
+            type="email"
+            name="email"
+            placeholder="John123"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        {/* <div className={styles.inputcontainer}>
+          <label htmlFor="password">Password : </label>
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="••••••••"
+              style={{ position: "relative" }}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {password ? (
+              showPassword ? (
+                <i
+                  className={styles.passicon}
+                  onClick={() => setshowPassword(!showPassword)}
+                >
+                  <FiEyeOff />
+                </i>
+              ) : (
+                <i
+                  className={styles.passicon}
+                  onClick={() => setshowPassword(!showPassword)}
+                >
+                  <FiEye />
+                </i>
+              )
+            ) : null}
+          </div>
+        </div> */}
+        <button type="submit" className={styles.submitbtn}>
+          Login
+        </button>
+        <button onClick={onGoogleSignIn} style={{ margin: "20px 0" }}>
+          <FaGoogle color="#FFFFFF" size={30} />
+        </button>
+        <p className={styles.authredirect}>
+          Don't have an account?{" "}
+          <Link
+            to={"/register"}
+            style={{ color: "#1E40AF", textDecoration: "underline" }}
+          >
+            Signup
+          </Link>
+        </p>
+      </form>
+    </div>
+  );
+};
+
+export default LoginPage;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { auth } from "./firebaseConfig.js";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  sendEmailVerification,
+  updatePassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+  sendSignInLinkToEmail,
+} from "firebase/auth";
+
+import Cookies from "js-cookie";
+import { useSelector, useDispatch } from "react-redux";
+import { setAuth } from "../redux/features/authSlice";
+import { useNavigate } from "react-router-dom";
+
+export const doCreateUserWithEmailAndPassword = async (email, password) => {
+  return createUserWithEmailAndPassword(auth, email, password);
+};
+
+export const doSignInWithEmailAndPassword = (email, password) => {
+  return signInWithEmailAndPassword(auth, email, password);
+};
+
+export const doSignInWithEmail = async (email) => {
+  // redux auth value
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+
+  // dispatch function to call the action defined in the redux store
+  const dispatch = useDispatch();
+
+  const actionCodeSettings = {
+    url: "http://localhost:5173/",
+    // This must be true.
+    handleCodeInApp: true,
+    // dynamicLinkDomain: 'example.page.link'
+  };
+  const result = await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+  console.log(result);
+};
+
+export const doSignInWithGoogle = async () => {
+  // redux auth value
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+
+  // dispatch function to call the action defined in the redux store
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const provider = new GoogleAuthProvider();
+  const result = await signInWithPopup(auth, provider);
+  Cookies.set("user", user, { expires: 7 });
+  const user = result.user;
+  dispatch(setAuth(user));
+  navigate(`/`);
+
+};
+
+export const doSignOut = () => {
+  return auth.signOut();
+};
+
+export const doPasswordReset = (email) => {
+  return sendPasswordResetEmail(auth, email);
+};
+
+export const doPasswordChange = (password) => {
+  return updatePassword(auth.currentUser, password);
+};
+
+export const doSendEmailVerification = () => {
+  return sendEmailVerification(auth.currentUser, {
+    url: `${window.location.origin}/home`,
+  });
+};
+

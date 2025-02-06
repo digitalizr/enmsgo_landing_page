@@ -1,18 +1,88 @@
 import React, { useState } from "react";
 import styles from "../styles/login.module.css";
+import { FaGoogle } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { doSignInWithGoogle, doSignInWithEmail, doSignInWithEmailAndPassword } from "../config/auth";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setAuth } from "../redux/features/authSlice";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { Link } from "react-router-dom";
 
 const LoginPage = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [showPassword, setshowPassword] = useState(false);
   const [password, setPassword] = useState("");
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const result = await doSignInWithEmail(email);
+      console.log(result);
+      console.log("Email sign-in link sent!");
+    } catch (error) {
+      console.log("Something went wrong:", error);
+    } finally {
+      setLoading(false);
+    }
+
+    // to signin using email and password
+    // try {
+    //   setLoading(true);
+    //   const results = await doSignInWithEmailAndPassword(email, password);
+    //   console.log(results?.user);
+
+      
+    // } catch (error) {
+    //   console.log("Something went wrong : ", error);
+    //   setLoading(false);
+    // } finally {
+    //   setLoading(false);
+    // }
+  };
+
+  const onGoogleSignIn = async () => {
+    try {
+      setLoading(true);
+      const result = await doSignInWithGoogle();
+      const user = result.user;
+
+      // Store user data in Redux
+      dispatch(
+        setAuth({
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        })
+      );
+
+      // Save to cookies
+      Cookies.set("user", user, { expires: 7 });
+
+      navigate("/");
+    } catch (error) {
+      console.log("Something went wrong:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.authcontainer}>
-      <form onSubmit={() => {}}>
+      <form onSubmit={handleSubmit}>
         <div className={styles.inputcontainer}>
-          <label htmlFor="username">UserName : </label>
-          <input type="text" name="username" placeholder="John123" />
+          <label>Email:</label>
+          <input
+            type="email"
+            placeholder="John123"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </div>
         <div className={styles.inputcontainer}>
           <label htmlFor="password">Password : </label>
@@ -44,8 +114,15 @@ const LoginPage = () => {
             ) : null}
           </div>
         </div>
-        <button type="submit" className={styles.submitbtn}>
-          Login
+        <button type="submit" className={styles.submitbtn} disabled={loading}>
+          {loading ? "Loading..." : "Login"}
+        </button>
+        <button
+          onClick={onGoogleSignIn}
+          style={{ margin: "20px 0" }}
+          disabled={loading}
+        >
+          <FaGoogle color="#FFFFFF" size={30} />
         </button>
         <p className={styles.authredirect}>
           Don't have an account?{" "}
