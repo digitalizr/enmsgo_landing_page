@@ -19,30 +19,29 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      setLoading(true);
-      const result = await doSignInWithEmail(email);
-      console.log(result);
-      console.log("Email sign-in link sent!");
-    } catch (error) {
-      console.log("Something went wrong:", error);
-    } finally {
-      setLoading(false);
-    }
-
-    // to signin using email and password
     // try {
     //   setLoading(true);
-    //   const results = await doSignInWithEmailAndPassword(email, password);
-    //   console.log(results?.user);
-
-      
+    //   const result = await doSignInWithEmail(email);
+    //   console.log(result);
+    //   console.log("Email sign-in link sent!");
     // } catch (error) {
-    //   console.log("Something went wrong : ", error);
-    //   setLoading(false);
+    //   console.log("Something went wrong:", error);
     // } finally {
     //   setLoading(false);
     // }
+
+    // to signin using email and password
+    try {
+      setLoading(true);
+      const results = await doSignInWithEmailAndPassword(email, password);
+      console.log(results?.user);
+      window.location.href = "https://app.enmsgo.com/login";
+    } catch (error) {
+      console.log("Something went wrong : ", error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onGoogleSignIn = async () => {

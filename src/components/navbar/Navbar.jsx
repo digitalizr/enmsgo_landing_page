@@ -89,10 +89,10 @@ function Navbar() {
               <img src="/Globe.png" alt="" />
               <h6>EN</h6>
             </div>
-            <Link to={"/login"} className={styles.getStarted}>
+            <a href="https://app.enmsgo.com/login"  className={styles.getStarted} >
               <img src={ user?.photoURL   || "/avatar.png"} alt="userimg" />
               <button>Get Started</button>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
@@ -130,10 +130,10 @@ function Navbar() {
             <img src="/Globe.png" alt="" />
             <h6>EN</h6>
           </div>
-          <Link to={"/login"} className={styles.getStarted}>
+          <a href="https://app.enmsgo.com/login" className={styles.getStarted}>
             <img src={user?.photoURL || "/avatar.png"} alt="userimg" />
             <button>Get Started</button>
-          </Link>
+          </a>
         </div>
       </div>
     </div>
