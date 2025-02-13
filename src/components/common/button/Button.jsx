@@ -1,47 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./button.module.css";
-const Button = ({ title, btnStyles }) => {
-  const [showOptions, setShowOptions] = useState(false);
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "",
-          url: "",
-        })
-        .catch((error) => console.error("Sharing failed", error));
-    } else {
-      setShowOptions(!showOptions);
-    }
-  };
+
+const Button = ({ title, btnStyles, handleClick }) => {
   return (
-    <button className={styles.btn} style={btnStyles} onClick={handleShare}>
+    <button className={styles.btn} style={btnStyles} onClick={handleClick}>
       {title}
-      {showOptions && (
-        <div className={styles.shareOptions}>
-          <a
-            href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn
-          </a>
-          <a
-            href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Facebook
-          </a>
-          <a
-            href={`https://api.whatsapp.com/send?text=${text} ${shareUrl}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            WhatsApp
-          </a>
-        </div>
-      )}
     </button>
   );
 };
