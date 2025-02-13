@@ -9,7 +9,7 @@ function Navbar() {
     <div className={styles.navbarContainer}>
       {/* Logo */}
       <NavLink to="/" className={styles.logocontainer}>
-        <img src="/public/logo-transparent.png" alt="logo" />
+        <img src="/logo-transparent.png" alt="logo" />
         <span>ENMSgo</span>
       </NavLink>
       {/* MOBILE MENU */}
