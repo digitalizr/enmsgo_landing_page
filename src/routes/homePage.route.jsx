@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Hero from "../components/home/hero/Hero";
 import Views from "../components/home/views/Views";
 import Articles from "../components/home/articles/Articles";
 import UseCases from "../components/home/use-cases/UseCases";
 import { collection, getDocs } from "firebase/firestore";
-import { useEffect } from "react";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
@@ -25,7 +24,6 @@ const HomePage = () => {
     reportGenImg,
     id,
   } = dataList[0] || {};
-  
 
   useEffect(() => {
     getData();

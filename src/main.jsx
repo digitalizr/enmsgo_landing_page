@@ -4,11 +4,9 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./Layout/MainLayout.jsx";
 import HomePage from "./routes/homePage.route.jsx";
-import LoginPage from "./routes/loginPage.route.jsx";
-import RegisterPage from "./routes/registerPage.route.jsx";
-import { store } from "./redux/store.js";
-import { Provider } from "react-redux";
-import Editor from "./routes/editorPage.route.jsx";
+import SingleBlogPost from "./routes/singleBlogPage.route.jsx"
+import BlogPage from "./routes/blogPage.route.jsx"
+
 const router = createBrowserRouter([
   {
     element: <MainLayout />,
@@ -26,16 +24,12 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "/login",
-        element: <LoginPage />,
+        path: "/blogs",
+        element: <BlogPage />,
       },
       {
-        path: "/register",
-        element: <RegisterPage />,
-      },
-      {
-        path: "/editor",
-        element: <Editor />,
+        path: "/singleblog",
+        element: <SingleBlogPost />,
       },
     ],
   },
@@ -43,9 +37,6 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <Provider store={store}>
       <RouterProvider router={router} />
-    </Provider>
-    ,
   </StrictMode>
 );
