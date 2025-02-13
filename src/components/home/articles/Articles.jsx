@@ -1,33 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./articles.module.css";
 import ContainerBox from "../../common/containerBox/ContainerBox";
+import { collection, getDocs,limit,query } from "firebase/firestore";
+import { Spinner } from "react-activity";
+import "react-activity/dist/library.css";
+import { db } from "../../../config/firebaseConfig";
+import Button from "../../common/button/Button";
+import { useNavigate } from "react-router-dom";
+
 
 const Articles = () => {
+  const [loading, setLoading] = useState(false);
+  const [blogList, setBlogList] = useState([]);
+
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    getBlogs();
+  }, []);
+
+  const getBlogs = async () => {
+    setLoading(true);
+    try {
+      const q = query(collection(db, "blogs"), limit(3)); 
+      const querySnapshot = await getDocs(q);
+      const tempData = [];
+      querySnapshot.forEach((doc) => {
+        tempData.push({ id: doc.id, ...doc.data() });
+      });
+      setBlogList(tempData);
+    } catch (error) {
+      console.log("Something went wrong:", error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleClick = () =>{
+    
+  }
+
   return (
     <div className={styles.articleCon}>
       <h2>Articles &gt; </h2>
       <div className={styles.containerWrapper}>
-        <ContainerBox
-          img={"/article1.png"}
-          title={"Sankey diagram"}
-          subTitle={"Level 3 Monitoring"}
-          desc={
-            "To achieve level 3 monitoring, each individual consumption points needs to be monitored"
-          }
-        />
-        <ContainerBox
-          img={"/article2.png"}
-          title={"Treemap"}
-          subTitle={"Watch your Energy Consumer"}
-          desc={
-            "A great visualization toll to get clear understanding on which part of the assets structure consumes most energy and how they change"
-          }
-        />
-        <ContainerBox
-          img={"/article3.png"}
-          title={"Bar Chart Race"}
-          subTitle={"Which day is the day?"}
-          desc={"Wacth which day causes the most energy consumptions"}
+        {loading ? (
+          <Spinner />
+        ) : (
+          blogList.length > 0 &&
+          blogList.map((blog) => {
+            return <ContainerBox blog={blog} key={blog?.id} />;
+          })
+        )}
+      </div>
+      <div>
+        <Button
+          title="View More"
+          btnStyles={{
+            backgroundColor: "#65558F",
+            color: "white",
+            padding: "10px 25px",
+            margin: "10px 0",
+            borderRadius: "25px",
+          }}
+          handleClick={()=>navigate(`/blogs`)}
         />
       </div>
     </div>

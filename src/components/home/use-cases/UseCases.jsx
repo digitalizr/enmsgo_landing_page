@@ -1,45 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./usecases.module.css";
 import ContainerBox from "../../common/containerBox/ContainerBox";
+import { collection, getDocs,limit,query } from "firebase/firestore";
+import { Spinner } from "react-activity";
+import "react-activity/dist/library.css";
+import { db } from "../../../config/firebaseConfig";
 
 const UseCases = () => {
+  const [loading, setLoading] = useState(false);
+  const [blogList, setBlogList] = useState([]);
+  useEffect(() => {
+    getBlogs();
+  }, []);
+
+  const getBlogs = async () => {
+    setLoading(true);
+    try {
+      const q = query(collection(db, "blogs"), limit(3)); 
+      const querySnapshot = await getDocs(q);
+      const tempData = [];
+      querySnapshot.forEach((doc) => {
+        tempData.push({ id: doc.id, ...doc.data() });
+      });
+      setBlogList(tempData);
+    } catch (error) {
+      console.log("Something went wrong:", error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={styles.articleCon}>
-      <h2>Use Cases &gt; </h2>
+      <h2>Articles &gt; </h2>
       <div className={styles.containerWrapper}>
-        <ContainerBox
-          img={"/usecase1.png"}
-          title={"Zoom to Bounding Box"}
-          subTitle={"Birds Eye view on energy consumers"}
-          desc={
-            "To achieve level 3 monitoring, each individual consumption points needs to be monitored"
-          }
-          headingClr="#1D1B20"
-          subHeaingClr="#49454F"
-          descClr="#49454F"
-        />
-        <ContainerBox
-          img={"/usecase2.png"}
-          title={"Title"}
-          subTitle={"SubTitle"}
-          desc={
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-          }
-          headingClr="#1D1B20"
-          subHeaingClr="#49454F"
-          descClr="#49454F"
-        />
-        <ContainerBox
-          img={"/usecase3.png"}
-          title={"Title"}
-          subTitle={"SubTitle"}
-          desc={
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-          }
-          headingClr="#1D1B20"
-          subHeaingClr="#49454F"
-          descClr="#49454F"
-        />
+        {loading ? (
+          <Spinner />
+        ) : (
+          blogList.length > 0 &&
+          blogList.map((blog) => {
+            return <ContainerBox blog={blog} key={blog?.id} />;
+          })
+        )}
       </div>
     </div>
   );
