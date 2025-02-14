@@ -5,7 +5,7 @@ const Hero = ({ heroImg, heading1, heading2, desc }) => {
   return (
     <div className={styles.heroCon}>
       <div className={styles.heroConLeft}>
-        <img src="/grafik.png" alt="grafik" />
+        <img src={heroImg} alt="grafik" />
       </div>
       <div className={styles.heroConRight}>
         <h2>{heading1}</h2>
