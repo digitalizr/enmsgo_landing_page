@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/main.module.css";
+import ContainerBox from "../components/common/containerBox/ContainerBox";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
-import BlogBox from "../components/common/containerBox/BlogBox";
+import EnerygyMgtBox from "../components/common/containerBox/EnerygyMgtBox";
 
-const BlogPage = () => {
+const EnergyManagement = () => {
   const [loading, setLoading] = useState(false);
-  const [blogList, setBlogList] = useState([]);
+  const [energyMgtList, setEnergyMgtList] = useState([]);
 
   useEffect(() => {
-    getBlogs();
+    getEnergyMgt();
   }, []);
 
-  const getBlogs = async () => {
+  const getEnergyMgt = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await getDocs(collection(db, "blogs"));
+      const querySnapshot = await getDocs(collection(db, "energy-management"));
       const tempData = [];
       querySnapshot.forEach((doc) => {
         tempData.push({ id: doc.id, ...doc.data() });
       });
-      setBlogList(tempData);
+      setEnergyMgtList(tempData);
     } catch (error) {
       console.log("Something went wrong:", error);
       setLoading(false);
@@ -52,11 +53,11 @@ const BlogPage = () => {
   return (
     <div>
       <div className={styles.mainContainer}>
-        <h2>Blogs.</h2>
+        <h2>Energy Management.</h2>
         <div className={styles.containerWrapper}>
-          {blogList.length > 0 &&
-            blogList.map((blog) => {
-              return <BlogBox data={blog} key={blog?.id} />;
+          {energyMgtList.length > 0 &&
+            energyMgtList.map((energymgt) => {
+              return <EnerygyMgtBox data={energymgt} key={energymgt?.id} />;
             })}
         </div>
       </div>
@@ -64,4 +65,5 @@ const BlogPage = () => {
   );
 };
 
-export default BlogPage;
+
+export default EnergyManagement

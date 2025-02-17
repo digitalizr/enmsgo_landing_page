@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styles from "./articles.module.css";
-import ContainerBox from "../../common/containerBox/ContainerBox";
-import { collection, getDocs,limit,query } from "firebase/firestore";
+import BlogBox from "../../common/containerBox/BlogBox";
+import { collection, getDocs, limit, query } from "firebase/firestore";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import { db } from "../../../config/firebaseConfig";
 import Button from "../../common/button/Button";
 import { useNavigate } from "react-router-dom";
 
-
 const Articles = () => {
   const [loading, setLoading] = useState(false);
   const [blogList, setBlogList] = useState([]);
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     getBlogs();
@@ -23,7 +21,7 @@ const Articles = () => {
   const getBlogs = async () => {
     setLoading(true);
     try {
-      const q = query(collection(db, "blogs"), limit(3)); 
+      const q = query(collection(db, "blogs"), limit(3));
       const querySnapshot = await getDocs(q);
       const tempData = [];
       querySnapshot.forEach((doc) => {
@@ -38,10 +36,6 @@ const Articles = () => {
     }
   };
 
-  const handleClick = () =>{
-    
-  }
-
   return (
     <div className={styles.articleCon}>
       <h2>Articles &gt; </h2>
@@ -51,23 +45,25 @@ const Articles = () => {
         ) : (
           blogList.length > 0 &&
           blogList.map((blog) => {
-            return <ContainerBox blog={blog} key={blog?.id} />;
+            return <BlogBox data={blog} key={blog?.id} />;
           })
         )}
       </div>
-      <div>
-        <Button
-          title="View More"
-          btnStyles={{
-            backgroundColor: "#65558F",
-            color: "white",
-            padding: "10px 25px",
-            margin: "10px 0",
-            borderRadius: "25px",
-          }}
-          handleClick={()=>navigate(`/blogs`)}
-        />
-      </div>
+      {blogList.length === 3 && (
+        <div>
+          <Button
+            title="View More"
+            btnStyles={{
+              backgroundColor: "#65558F",
+              color: "white",
+              padding: "10px 25px",
+              margin: "10px 0",
+              borderRadius: "25px",
+            }}
+            handleClick={() => navigate(`/blogs`)}
+          />
+        </div>
+      )}
     </div>
   );
 };

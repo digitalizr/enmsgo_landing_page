@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/main.module.css";
+import ContainerBox from "../components/common/containerBox/ContainerBox";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
-import BlogBox from "../components/common/containerBox/BlogBox";
+import UseCaseBox from "../components/common/containerBox/UseCaseBox";
 
-const BlogPage = () => {
+const UseCasePage = () => {
   const [loading, setLoading] = useState(false);
-  const [blogList, setBlogList] = useState([]);
+  const [useCaseList, setUseCaseList] = useState([]);
 
   useEffect(() => {
-    getBlogs();
+    getUseCases();
   }, []);
 
-  const getBlogs = async () => {
+  const getUseCases = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await getDocs(collection(db, "blogs"));
+      const querySnapshot = await getDocs(collection(db, "usecase"));
       const tempData = [];
       querySnapshot.forEach((doc) => {
         tempData.push({ id: doc.id, ...doc.data() });
       });
-      setBlogList(tempData);
+      setUseCaseList(tempData);
     } catch (error) {
       console.log("Something went wrong:", error);
       setLoading(false);
@@ -52,11 +53,11 @@ const BlogPage = () => {
   return (
     <div>
       <div className={styles.mainContainer}>
-        <h2>Blogs.</h2>
+        <h2>Use Cases.</h2>
         <div className={styles.containerWrapper}>
-          {blogList.length > 0 &&
-            blogList.map((blog) => {
-              return <BlogBox data={blog} key={blog?.id} />;
+          {useCaseList.length > 0 &&
+            useCaseList.map((usecase) => {
+              return <UseCaseBox data={usecase} key={usecase?.id} />;
             })}
         </div>
       </div>
@@ -64,4 +65,4 @@ const BlogPage = () => {
   );
 };
 
-export default BlogPage;
+export default UseCasePage;

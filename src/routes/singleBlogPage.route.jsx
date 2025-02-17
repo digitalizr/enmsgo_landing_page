@@ -1,5 +1,5 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { doc, getDoc, deleteDoc, updateDoc } from "firebase/firestore";
+import { useLocation } from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { useEffect, useState } from "react";
 import styles from "../styles/singleBlogPost.module.css";
@@ -8,46 +8,38 @@ import "react-activity/dist/library.css";
 
 const SingleBlogPost = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
-  const blogId = searchParams.get("id");
-  const [blog, setBlog] = useState(null);
-  const [title, setTitle] = useState("");
-  const [subTitle, setSubTitle] = useState("");
-  const [desc, setDesc] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [loadingBlog, setLoadingBlog] = useState(false);
+  const dataId = searchParams.get("id");
+  const collectionName = searchParams.get("collection");
+  const [data, setData] = useState(null);
+  const [loadingData, setLoadingData] = useState(false);
 
   useEffect(() => {
-    getBlog();
+    getData();
   }, []);
 
-  const getBlog = async () => {
-    setLoadingBlog(true);
+  const getData = async () => {
+    setLoadingData(true);
     try {
-      if (!blogId) return;
-      const docRef = doc(db, "blogs", blogId);
+      if (!dataId) return;
+      const docRef = doc(db, collectionName, dataId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setBlog(docSnap.data());
-        setTitle(docSnap.data().title);
-        setSubTitle(docSnap.data().subTitle);
-        setDesc(docSnap.data().desc);
-        setLoadingBlog(false);
+        setData(docSnap.data());
+        setLoadingData(false);
       } else {
         console.log("No such document!");
-        toast.error("No such document found...");
-        setLoadingBlog(false);
+        setLoadingData(false);
       }
     } catch (error) {
-      toast.error("No such document found... : ", error);
-      setLoadingBlog(false);
+      console.log("No such document found... : ", error);      
+      setLoadingData(false);
     } finally {
-      setLoadingBlog(false);
+      setLoadingData(false);
     }
   };
 
-  if (loadingBlog) {
+  if (loadingData) {
     return (
       <div style={{width : '100%',height:'85vh',display:'flex',justifyContent:'center',alignItems:'center'}}>
         <Spinner />
@@ -56,19 +48,19 @@ const SingleBlogPost = () => {
   }
 
   return (
-    blog && (
+    data && (
       <div className={styles.mainContainer}>
         <div className={styles.mainTop}>
           <div>
-            <h1>{blog.title}</h1>
-            <h2>{blog.subTitle}</h2>
+            <h1>{data.title}</h1>
+            <h2>{data.subTitle}</h2>
           </div>
           <div>
-            <img src={blog.img} alt={blog.title} />
+            <img src={data.img} alt={data.title} />
           </div>
         </div>
         <div className={styles.mainBtm}>
-          <p dangerouslySetInnerHTML={{ __html: blog.desc }}></p>
+          <p dangerouslySetInnerHTML={{ __html: data.desc }}></p>
         </div>
       </div>
     )

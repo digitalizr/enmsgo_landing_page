@@ -6,6 +6,8 @@ import MainLayout from "./Layout/MainLayout.jsx";
 import HomePage from "./routes/homePage.route.jsx";
 import SingleBlogPost from "./routes/singleBlogPage.route.jsx"
 import BlogPage from "./routes/blogPage.route.jsx"
+import UseCasePage from "./routes/useCasePage.route.jsx";
+import EnergyManagement from "./routes/energyMgt.route.jsx";
 
 const router = createBrowserRouter([
   {
@@ -17,11 +19,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/use-cases",
-        element: <HomePage />,
+        element: <UseCasePage />,
       },
       {
         path: "/energy-management",
-        element: <HomePage />,
+        element: <EnergyManagement />,
       },
       {
         path: "/blogs",
