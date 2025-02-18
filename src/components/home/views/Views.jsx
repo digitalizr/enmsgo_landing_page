@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import styles from "./views.module.css";
-import dashboardImage from "/dashboard.png";
-import aiAnalysisImage from "/analysis.avif";
-import alertsImage from "/dataVisual.avif";
-import reportImage from "/reportGen.avif";
 import Button from "../../common/button/Button";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -20,10 +16,10 @@ const Views = ({
   const [activeTab, setActiveTab] = useState("Dashboard");
 
   const images = {
-    Dashboard: dashboardImage,
-    "Ai Analysis": aiAnalysisImage,
-    Alerts: alertsImage,
-    "Report Generation": reportImage,
+    Dashboard: dashboardImg,
+    "Ai Analysis": aiAnalysisImg,
+    Alerts: alertsImg,
+    "Report Generation": reportGenImg,
   };
 
   const settings = {
