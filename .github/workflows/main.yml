@@ -13,6 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Build the React app
+        run: npm run build
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -21,8 +32,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t your-dockerhub-username/react-app:latest .
+          docker build -t digitalizr/enmsgo_landing_page:0.1 .
 
       - name: Push Docker image
         run: |
-          docker push your-dockerhub-username/react-app:latest
+          docker push digitalizr/enmsgo_landing_page:0.1
