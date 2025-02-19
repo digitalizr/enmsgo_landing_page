@@ -32,8 +32,8 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t digitalizr//enmsgo_landing_page:0.1 .
+          docker build -t digitalizr/enmsgo_landing_page:0.1 .
 
       - name: Push Docker image
         run: |
-          docker push digitalizr//enmsgo_landing_page:0.1
+          docker push digitalizr/enmsgo_landing_page:0.1
