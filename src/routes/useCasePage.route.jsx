@@ -6,6 +6,7 @@ import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import UseCaseBox from "../components/common/containerBox/UseCaseBox";
+import CardComp from "@/components/cardComp/CardComp";
 
 const UseCasePage = () => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,7 @@ const UseCasePage = () => {
         <div className={styles.containerWrapper}>
           {useCaseList.length > 0 &&
             useCaseList.map((usecase) => {
-              return <UseCaseBox data={usecase} key={usecase?.id} />;
+              return  <CardComp data={usecase} key={usecase?.id} collection={"usecase"}  />
             })}
         </div>
       </div>

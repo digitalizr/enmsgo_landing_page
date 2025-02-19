@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import styles from "../styles/singleBlogPost.module.css";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
+import { useTheme } from "@/context/ThemeContext";
 
 const SingleBlogPost = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ const SingleBlogPost = () => {
   const collectionName = searchParams.get("collection");
   const [data, setData] = useState(null);
   const [loadingData, setLoadingData] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     getData();
@@ -32,7 +34,7 @@ const SingleBlogPost = () => {
         setLoadingData(false);
       }
     } catch (error) {
-      console.log("No such document found... : ", error);      
+      console.log("No such document found... : ", error);
       setLoadingData(false);
     } finally {
       setLoadingData(false);
@@ -41,8 +43,16 @@ const SingleBlogPost = () => {
 
   if (loadingData) {
     return (
-      <div style={{width : '100%',height:'85vh',display:'flex',justifyContent:'center',alignItems:'center'}}>
-        <Spinner />
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Spinner color={theme?.heading} size={30} />
       </div>
     );
   }

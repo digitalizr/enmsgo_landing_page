@@ -7,10 +7,13 @@ import { db } from "../../../config/firebaseConfig";
 import Button from "../../common/button/Button";
 import { useNavigate } from "react-router-dom";
 import UseCaseBox from "../../common/containerBox/UseCaseBox";
+import { useTheme } from "@/context/ThemeContext";
+import CardComp from "@/components/cardComp/CardComp";
 
 const UseCases = () => {
   const [loading, setLoading] = useState(false);
   const [useCases, setUseCases] = useState([]);
+  const { theme } = useTheme();
   useEffect(() => {
     getBlogs();
   }, []);
@@ -36,24 +39,24 @@ const UseCases = () => {
 
   return (
     <div className={styles.articleCon}>
-      <h2>Use Cases &gt; </h2>
+      <h2 style={{ color: theme?.heading }}>Use Cases &gt; </h2>
       <div className={styles.containerWrapper}>
         {loading ? (
           <Spinner />
         ) : (
-          useCases.length > 0 &&
+          useCases?.length > 0 &&
           useCases.map((usecase) => {
-            return <UseCaseBox data={usecase} key={usecase?.id} />;
+            return <CardComp data={usecase} key={usecase}  collection={"usecase"} />;
           })
         )}
       </div>
-      {useCases.length === 3 && (
+      {useCases?.length == 3 && (
         <div>
           <Button
             title="View More"
             btnStyles={{
-              backgroundColor: "#65558F",
-              color: "white",
+              backgroundColor: theme?.buttonBackground,
+              color: theme?.text,
               padding: "10px 25px",
               margin: "10px 0",
               borderRadius: "25px",

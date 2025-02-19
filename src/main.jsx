@@ -4,10 +4,11 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./Layout/MainLayout.jsx";
 import HomePage from "./routes/homePage.route.jsx";
-import SingleBlogPost from "./routes/singleBlogPage.route.jsx"
-import BlogPage from "./routes/blogPage.route.jsx"
+import SingleBlogPost from "./routes/singleBlogPage.route.jsx";
+import BlogPage from "./routes/blogPage.route.jsx";
 import UseCasePage from "./routes/useCasePage.route.jsx";
 import EnergyManagement from "./routes/energyMgt.route.jsx";
+import ThemeProvider from "./context/ThemeContext";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <ThemeProvider>
       <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>
 );

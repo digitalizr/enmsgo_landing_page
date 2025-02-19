@@ -224,3 +224,49 @@ export const doSendEmailVerification = () => {
   });
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+carosuel:
+      <Carousel
+        className="w-full max-w-md"
+        opts={{ align: "start" }}
+      >
+        <CarouselContent>
+          {data &&
+            Object.keys(data).map((item, index) => (
+              <CarouselItem
+                key={index}
+                className="basis-full sm:basis-1/4 md:basis-1/4 lg:basis-1/4"
+
+              >
+                <div className="p-2" onClick={() => setActiveTab(item)}>
+                  {/* <Card className = "border-none"> */}
+                  <CardContent
+                    className={`flex aspect-square items-center justify-center p-6 cursor-pointer transition-colors duration-300 rounded-lg 
+                      ${
+                        activeTab === item
+                          ? "bg-black text-white"
+                          : "bg-white text-black"
+                      }`}
+                  >
+                    <span className="text-sm font-semibold">{item}</span>
+                  </CardContent>
+                  {/* </Card> */}
+                </div>
+              </CarouselItem>
+            ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>

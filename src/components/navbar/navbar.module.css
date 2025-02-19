@@ -11,11 +11,10 @@
 .logocontainer {
     display: flex;
     align-items: center;
-    gap: 4px;
     color: #65558F;
     font-size: 25px;
     img {
-        width: 100px;
+        width: 80px;
         height: auto;
         background-size: cover;
     }
@@ -94,7 +93,7 @@
 /* Desktop Menu */
 .desktopmenu {
     display: flex;
-    gap: 6rem;
+    gap: 4rem;
     align-items: center;
     font-weight: 500;
 }
@@ -169,7 +168,7 @@
 
 
 /* Media Queries for Mobile View */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 1000px) {
     .navbarContainer {
         height: 5rem;
     }

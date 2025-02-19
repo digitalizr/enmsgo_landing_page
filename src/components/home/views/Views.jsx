@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styles from "./views.module.css";
 import Button from "../../common/button/Button";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import CarouselComp from "../../CarouselComp/CarouselComp";
+import { useTheme } from "@/context/ThemeContext";
 
 const Views = ({
   viewHeading1,
@@ -14,6 +13,7 @@ const Views = ({
   reportGenImg,
 }) => {
   const [activeTab, setActiveTab] = useState("Dashboard");
+  const{theme} = useTheme()
 
   const images = {
     Dashboard: dashboardImg,
@@ -22,69 +22,15 @@ const Views = ({
     "Report Generation": reportGenImg,
   };
 
-  const settings = {
-    dots: false,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    autoplay: false,
-    arrows: false,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-          infinite: false,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: false,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: false,
-          dots: false,
-        },
-      },
-    ],
-  };
-
   return (
     <div className={styles.viewCon}>
-      <h1 className={styles.viewHeading}>
-        {/* Where Energy Management meets AI */}
-        {viewHeading1}
-      </h1>
-      <h3 className={styles.viewSubHeading}>
-        {/* Have Control, Have the Predictability and Have Clear View */}
-        {viewHeading2}
-      </h3>
-      <Slider {...settings}>
-        {Object.keys(images).map((tab) => (
-          <div key={tab} className={styles.buttonWrapper}>
-            <button
-              className={
-                activeTab === tab ? styles.activeButton : styles.inactiveButton
-              }
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </button>
-          </div>
-        ))}
-      </Slider>
+      <h1 className={styles.viewHeading} style={{color : theme.heading}}>{viewHeading1}</h1>
+      <h3 className={styles.viewSubHeading} style={{color : theme.text}}>{viewHeading2}</h3>
+      <CarouselComp
+        data={images}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
       <div className={styles.imageContainer}>
         <img src={images[activeTab]} alt={activeTab} className={styles.image} />
       </div>
@@ -92,8 +38,8 @@ const Views = ({
         <Button
           title="Explore Features"
           btnStyles={{
-            backgroundColor: "#65558F",
-            color: "white",
+            backgroundColor: theme.buttonBackground,
+            color: theme.text,
             padding: "10px 25px",
             margin: "10px 0",
             borderRadius: "25px",

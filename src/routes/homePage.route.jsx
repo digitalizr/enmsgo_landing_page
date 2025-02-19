@@ -7,10 +7,12 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
-
+import { useTheme } from "@/context/ThemeContext";
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [dataList, setDataList] = useState([]);
+  const { theme } = useTheme();
+
   const {
     heroImg,
     heading1,
@@ -57,6 +59,7 @@ const HomePage = () => {
           left: "0",
           right: "0",
           bottom: "0",
+          backgroundColor: theme.background,
         }}
       >
         <Spinner size={30} color="#FFFFFF" />
@@ -65,7 +68,7 @@ const HomePage = () => {
   }
 
   return (
-    <div>
+    <div >
       <Hero
         heading1={heading1}
         heading2={heading2}
