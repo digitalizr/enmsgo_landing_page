@@ -8,6 +8,7 @@ import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import { useTheme } from "@/context/ThemeContext";
+import FooterComp from "@/components/footer/FooterComp";
 const HomePage = () => {
   const [loading, setLoading] = useState(false);
   const [dataList, setDataList] = useState([]);
@@ -62,7 +63,7 @@ const HomePage = () => {
           backgroundColor: theme.background,
         }}
       >
-        <Spinner size={30} color="#FFFFFF" />
+        <Spinner size={30} color={theme?.heading}  />
       </div>
     );
   }
@@ -85,6 +86,7 @@ const HomePage = () => {
       />
       <Articles />
       <UseCases />
+      <FooterComp />
     </div>
   );
 };
