@@ -13,6 +13,9 @@ RUN npm install --legacy-peer-deps
 # Copy the rest of the application code
 COPY . .
 
+# Copy the public directory
+COPY public ./public
+
 # Build the React app
 RUN npm run build
 
