@@ -15,17 +15,18 @@
 }
 
 .heroConRight {
-    color: #FFFFFF;
-    h2 {
-        font-size: 14px;
-        font-weight: 300;
-    }
     h1 {
         font-size: 25px;
         letter-spacing: 1px;
         font-weight: 800;
         padding: 20px 0;
     }
+
+    h2 {
+        font-size: 18px;
+        font-weight: 600
+    }
+
     span {
         font-size: 14px;
         line-height: 1.7;
@@ -37,33 +38,38 @@
     .heroConLeft {
         width: 30%;
     }
-    
-    .heroConRight{
+
+    .heroConRight {
         h1 {
-        padding: 5px 0;
-        font-size: 22px;
+            padding: 5px 0;
+            font-size: 22px;
         }
     }
 }
+
 @media screen and (max-width : 960px) {
     .heroConLeft {
         width: 40%;
-    }   
-    .heroConRight{
+    }
+
+    .heroConRight {
         h1 {
-        font-size: 18px;
+            font-size: 18px;
         }
     }
 }
+
 @media screen and (max-width : 900px) {
     .heroCon {
         flex-direction: column;
         justify-content: center;
     }
+
     .heroConLeft,
-    .heroConRight{
+    .heroConRight {
         width: 100%;
     }
+
     .heroConLeft {
         img {
             width: 100%;
@@ -71,7 +77,8 @@
             background-size: cover;
         }
     }
-    .heroConRight{
+
+    .heroConRight {
         h1 {
             font-size: 25px;
             padding: 20px 0;

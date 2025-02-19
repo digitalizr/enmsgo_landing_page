@@ -7,10 +7,13 @@ import "react-activity/dist/library.css";
 import { db } from "../../../config/firebaseConfig";
 import Button from "../../common/button/Button";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "@/context/ThemeContext";
+import CardComp from "@/components/cardComp/CardComp";
 
 const Articles = () => {
   const [loading, setLoading] = useState(false);
   const [blogList, setBlogList] = useState([]);
+  const { theme } = useTheme();
 
   const navigate = useNavigate();
 
@@ -38,24 +41,27 @@ const Articles = () => {
 
   return (
     <div className={styles.articleCon}>
-      <h2>Articles &gt; </h2>
+      <h2 style={{ color: theme?.heading }}>Articles &gt; </h2>
       <div className={styles.containerWrapper}>
         {loading ? (
           <Spinner />
-        ) : (
+        ) :
+         (
           blogList.length > 0 &&
           blogList.map((blog) => {
-            return <BlogBox data={blog} key={blog?.id} />;
+            return <CardComp data = {blog} key={blog?.id} collection={"blogs"} />;
           })
-        )}
+        )
+        
+        }
       </div>
       {blogList.length === 3 && (
         <div>
           <Button
             title="View More"
             btnStyles={{
-              backgroundColor: "#65558F",
-              color: "white",
+              backgroundColor: theme.buttonBackground,
+              color: theme?.text,
               padding: "10px 25px",
               margin: "10px 0",
               borderRadius: "25px",

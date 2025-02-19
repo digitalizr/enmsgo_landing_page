@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/main.module.css";
-import ContainerBox from "../components/common/containerBox/ContainerBox";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
-import EnerygyMgtBox from "../components/common/containerBox/EnerygyMgtBox";
+import CardComp from "@/components/cardComp/CardComp";
 
 const EnergyManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +56,7 @@ const EnergyManagement = () => {
         <div className={styles.containerWrapper}>
           {energyMgtList.length > 0 &&
             energyMgtList.map((energymgt) => {
-              return <EnerygyMgtBox data={energymgt} key={energymgt?.id} />;
+              return   <CardComp data={energymgt} key={energymgt?.id} collection={"energy-management"} />
             })}
         </div>
       </div>

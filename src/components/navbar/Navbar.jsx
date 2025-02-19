@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
+import { useTheme } from "@/context/ThemeContext";
+import { LiaToggleOnSolid } from "react-icons/lia";
+import { LiaToggleOffSolid } from "react-icons/lia";
+import { themeColors } from "@/context/ThemeContext";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
-
+  const { theme, setTheme } = useTheme();
+  const [switchTheme, setSwitchTheme] = useState(false);
+  const handleTheme = () =>{
+    setSwitchTheme(!switchTheme)
+    if(switchTheme){
+      setTheme(themeColors.darkTheme)
+    }
+    else {
+      setTheme(themeColors.lightTheme)
+    }
+  }
   return (
     <div className={styles.navbarContainer}>
       {/* Logo */}
@@ -124,6 +138,9 @@ function Navbar() {
           <div>
             <img src="/Globe.png" alt="" />
             <h6>EN</h6>
+            <button onClick={handleTheme}>
+              {switchTheme ? <LiaToggleOnSolid /> : <LiaToggleOffSolid />}
+            </button>
           </div>
           <a href="https://app.enmsgo.com/login" className={styles.getStarted}>
             <img src={"/avatar.png"} alt="userimg" />
