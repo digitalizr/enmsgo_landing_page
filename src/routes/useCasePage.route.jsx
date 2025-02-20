@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/main.module.css";
-import ContainerBox from "../components/common/containerBox/ContainerBox";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
-import UseCaseBox from "../components/common/containerBox/UseCaseBox";
 import CardComp from "@/components/cardComp/CardComp";
+import { useTheme } from "@/context/ThemeContext";
+import FooterComp from "@/components/footer/FooterComp";
 
 const UseCasePage = () => {
   const [loading, setLoading] = useState(false);
   const [useCaseList, setUseCaseList] = useState([]);
+  const {theme} = useTheme()
 
   useEffect(() => {
     getUseCases();
@@ -44,9 +45,10 @@ const UseCasePage = () => {
           left: "0",
           right: "0",
           bottom: "0",
+          backgroundColor: theme.background,
         }}
       >
-        <Spinner size={30} color="#FFFFFF" />
+        <Spinner size={30} color={theme?.heading} />
       </div>
     );
   }
@@ -62,6 +64,7 @@ const UseCasePage = () => {
             })}
         </div>
       </div>
+      <FooterComp />
     </div>
   );
 };

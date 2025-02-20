@@ -8,6 +8,9 @@
 
 .heroConLeft {
     width: 25%;
+    img {
+        border-radius: 10px;
+    }
 }
 
 .heroConRight {

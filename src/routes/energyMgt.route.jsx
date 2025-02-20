@@ -5,10 +5,13 @@ import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import CardComp from "@/components/cardComp/CardComp";
+import { useTheme } from "@/context/ThemeContext";
+import FooterComp from "@/components/footer/FooterComp";
 
 const EnergyManagement = () => {
   const [loading, setLoading] = useState(false);
   const [energyMgtList, setEnergyMgtList] = useState([]);
+  const {theme} = useTheme()
 
   useEffect(() => {
     getEnergyMgt();
@@ -42,9 +45,10 @@ const EnergyManagement = () => {
           left: "0",
           right: "0",
           bottom: "0",
+          backgroundColor: theme.background,
         }}
       >
-        <Spinner size={30} color="#FFFFFF" />
+        <Spinner size={30} color={theme?.heading} />
       </div>
     );
   }
@@ -60,6 +64,7 @@ const EnergyManagement = () => {
             })}
         </div>
       </div>
+      <FooterComp />
     </div>
   );
 };

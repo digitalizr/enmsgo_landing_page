@@ -3,6 +3,7 @@ import styles from "./views.module.css";
 import Button from "../../common/button/Button";
 import CarouselComp from "../../CarouselComp/CarouselComp";
 import { useTheme } from "@/context/ThemeContext";
+import ImageComp from "@/components/HomeTab/ImageComp";
 
 const Views = ({
   viewHeading1,
@@ -22,6 +23,10 @@ const Views = ({
     "Report Generation": reportGenImg,
   };
 
+  const imageData = {
+    alt : activeTab,
+    src : images[activeTab],
+  }
   return (
     <div className={styles.viewCon}>
       <h1 className={styles.viewHeading} style={{color : theme.heading}}>{viewHeading1}</h1>
@@ -32,7 +37,8 @@ const Views = ({
         setActiveTab={setActiveTab}
       />
       <div className={styles.imageContainer}>
-        <img src={images[activeTab]} alt={activeTab} className={styles.image} />
+        {/* <img src={images[activeTab]} alt={activeTab} className={styles.image} /> */}
+        <ImageComp image={imageData} />
       </div>
       <div className={styles.btnWrapper}>
         <Button

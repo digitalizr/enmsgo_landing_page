@@ -62,7 +62,7 @@ export const themeColors = {
     button: "#2563eb",
     buttonBackground: "#3b82f6",
     border: "#cbd5e1",
-    lightBackground: "#e2e8f0",
+    lightBackground: "rgba(254,254,254,0.2)",
   },
 };
 

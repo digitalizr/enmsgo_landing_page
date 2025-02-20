@@ -21,6 +21,8 @@ const CardComp = ({ data,collection }) => {
   const handleReadMore = (data) => {
     navigate(`/singleblog?id=${data.id}&collection=${collection}`);
   };
+  const lightTheme = theme.lightBackground === "rgba(254,254,254,0.2)"
+  
 
   return (
     <div style={{ display: "flex", gap: "10px", padding: "40px 0" }}>
@@ -54,7 +56,7 @@ const CardComp = ({ data,collection }) => {
           </p>
 
           <CardDescription
-            className="mt-2 text-gray-700 truncatetext"
+            className={`mt-2 text-gray-700 ${lightTheme ? "truncatetext" : ""} `}
             dangerouslySetInnerHTML={{ __html: htmlContent }}
             style={{ color: theme.text }}
           />
