@@ -1,8 +1,13 @@
-# React + Vite
+# How to Initiate the Docker Build Co mand
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+docker build -t YOUR_DOCKERHUB_NAME/enmsgo_landing_page:VERSION .
 
-Currently, two official plugins are available:
+Example:
+docker build -t mohanpannir08/enmsgo_landing_page:1.2 .
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+After a successfull build you can initiate a the container by this command:
+docker run -d -p YOUR DESIRED PORT:80 YOUR_DOCKERHUB_NAME/enmsgo_landing_page:VERSION
+
+Example:
+docker run -d -p 8080:80 mohanpannir08/enmsgo_landing_page:1.2
