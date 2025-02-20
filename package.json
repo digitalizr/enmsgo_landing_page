@@ -1,11 +1,7 @@
 {
   "name": "lamadevblogapp",
   "private": true,
-<<<<<<< HEAD
   "version": "0.1.2",
-=======
-  "version": "0.0.1",
->>>>>>> 75a79dec172e99be1ae77e0ce48fc29a0fa225b2
   "type": "module",
   "scripts": {
     "dev": "vite",
