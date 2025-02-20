@@ -1,3 +1,10 @@
+# How to Install Packages
+
+
+# How to Build
+
+
+
 # How to Initiate the Docker Build Co mand
 
 docker build -t YOUR_DOCKERHUB_NAME/enmsgo_landing_page:VERSION .
