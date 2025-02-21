@@ -5,11 +5,14 @@ import { useTheme } from "@/context/ThemeContext";
 import { LiaToggleOnSolid } from "react-icons/lia";
 import { LiaToggleOffSolid } from "react-icons/lia";
 import { themeColors } from "@/context/ThemeContext";
+import { ContactModel } from "../contactModel/contactModel";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [switchTheme, setSwitchTheme] = useState(false);
+  const isLightTheme = theme.background === "#f8fafc";
+
   const handleTheme = () => {
     setSwitchTheme(!switchTheme);
     if (switchTheme) {
@@ -33,6 +36,9 @@ function Navbar() {
         <div
           className={styles.iconContainer}
           onClick={() => setOpen((prev) => !prev)}
+          style={{
+            backgroundColor: isLightTheme ? "black" : "",
+          }}
         >
           <div
             className={`${styles.bar} ${styles.originLeft} ${
@@ -91,8 +97,9 @@ function Navbar() {
                 open ? { flexDirection: "column" } : { flexDirection: "row" }
               }
             >
-              <img src="/Globe.png" alt="" />
-              <h6>EN</h6>
+              <button onClick={() => setOpen(!open)}>
+                <ContactModel />
+              </button>
               <button onClick={handleTheme}>
                 {switchTheme ? <LiaToggleOnSolid /> : <LiaToggleOffSolid />}
               </button>
@@ -138,8 +145,9 @@ function Navbar() {
         </NavLink>
         <div className={styles.mobEndContainer}>
           <div>
-            <img src="/Globe.png" alt="" />
-            <h6>EN</h6>
+            <button>
+              <ContactModel />
+            </button>
             <button onClick={handleTheme}>
               {switchTheme ? <LiaToggleOnSolid /> : <LiaToggleOffSolid />}
             </button>
