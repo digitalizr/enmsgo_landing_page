@@ -1,5 +1,6 @@
 # How to Install Packages
-
+npm install --legacy-peer-deps
+npm install -f
 
 # How to Build
 
