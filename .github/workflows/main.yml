@@ -3,7 +3,7 @@ name: Build and Push React App
 on:
   push:
     branches:
-      - main  # Trigger only on main branch changes
+      - main
 
 jobs:
   build:
@@ -16,13 +16,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # Upgrade to Node.js 20
+          node-version: '20'
 
       - name: Install dependencies
-        run: npm install --force  # Use --force only if necessary
+        run: npm ci  # Ensures consistent dependencies
+
+      - name: Clean Vite cache
+        run: rm -rf node_modules/.vite
 
       - name: Build the React app
-        run: npm run build  # This should now work properly
+        run: npm run build  # Run the correct build command
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -31,9 +34,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: |
-          docker build -t digitalizr/enmsgo_landing_page:0.1 .
+        run: docker build -t digitalizr/enmsgo_landing_page:0.1 .
 
       - name: Push Docker image
-        run: |
-          docker push digitalizr/enmsgo_landing_page:0.1
+        run: docker push digitalizr/enmsgo_landing_page:0.1
