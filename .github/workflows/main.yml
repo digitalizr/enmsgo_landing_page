@@ -19,10 +19,10 @@ jobs:
           node-version: '14'
 
       - name: Install dependencies
-        run: npm install -f
+        run: npm install --legacy-peer-deps
 
       - name: Build the React app
-        run: npx vite build
+        run: npm run build
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
