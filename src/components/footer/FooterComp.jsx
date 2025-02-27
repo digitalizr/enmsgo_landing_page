@@ -19,7 +19,7 @@ const FooterComp = () => {
         <button
           className={styles.footerBtn}
           style={{
-            background: btnHover ? "transparent" : theme?.button,
+            background: btnHover ? "#3B82F6" : theme?.button,
             color: btnHover ? theme?.heading : theme?.text,
             border: btnHover ? `1px solid ${theme.border}` : "",
           }}
