@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Navbar.module.css";
+import styles from "./navbar.module.css";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "@/context/ThemeContext";
 import { LiaToggleOnSolid } from "react-icons/lia";
