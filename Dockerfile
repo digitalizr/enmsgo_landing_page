@@ -17,7 +17,7 @@ COPY . .
 COPY public ./public
 
 # Build the React app
-RUN npm run build
+RUN npx vite build
 
 # Stage 2: Serve the React app using a lightweight web server
 FROM nginx:alpine
