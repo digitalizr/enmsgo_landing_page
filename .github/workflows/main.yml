@@ -44,3 +44,9 @@ jobs:
           curl -X POST http://ec2-52-221-226-242.ap-southeast-1.compute.amazonaws.com:8050/webhook \
               -H "Content-Type: application/json" \
               -d '{"trigger": "docker_push", "password": "1234"}'
+
+      - name: Notify EC2 to Deploy
+        run: |
+          curl -X POST ${{ secrets.EC2_WEBHOOK_URL }} \
+              -H "Content-Type: application/json" \
+              -d '{"trigger": "docker_push", "password": "${{ secrets.WEBHOOK_PASSWORD }}"}'            
