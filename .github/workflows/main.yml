@@ -38,15 +38,20 @@ jobs:
         run: |
           docker push digitalizr/enmsgo_landing_page:0.1
 
-      - name: Notify EC2 to Deploy
+      # New step: Set up SSH for EC2 deployment
+      - name: Set up SSH for EC2 deployment
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
+      # New step: SSH into EC2 and deploy Docker container
+      - name: SSH into EC2 and deploy Docker image
         run: |
-          curl -X POST http://ec2-52-221-226-242.ap-southeast-1.compute.amazonaws.com:8050/webhook \
-              -H "Content-Type: application/json" \
-              -d '{"trigger": "docker_push", "password": "1234"}'
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
+            docker pull digitalizr/enmsgo_landing_page:0.1
+            docker stop enmsgo_landing_page_container || true
+            docker rm enmsgo_landing_page_container || true
+            docker run -d --name enmsgo_landing_page_container digitalizr/enmsgo_landing_page:0.1
+          EOF
 
-      - name: Notify EC2 to Deploy
-        run: |
-          curl -X POST ${{ secrets.EC2_WEBHOOK_URL }} \
-              -H "Content-Type: application/json" \
-              -d '{"trigger": "docker_push", "password": "${{ secrets.WEBHOOK_PASSWORD }}"}'            
+   
