@@ -37,3 +37,9 @@ jobs:
       - name: Push Docker image
         run: |
           docker push digitalizr/enmsgo_landing_page:0.1
+
+
+          # **Trigger webhook after the image is pushed**
+      - name: Notify EC2 to Deploy
+        run: |
+          curl -X POST http://ec2-52-221-226-242.ap-southeast-1.compute.amazonaws.com:8050/webhook -H "Content-Type: application/json" -d '{"trigger": "docker_push"}'
