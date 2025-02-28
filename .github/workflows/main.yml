@@ -51,7 +51,5 @@ jobs:
             docker pull digitalizr/enmsgo_landing_page:0.1
             docker stop enmsgo_landing_page_container || true
             docker rm enmsgo_landing_page_container || true
-            docker run -d --name enmsgo_landing_page_container digitalizr/enmsgo_landing_page:0.1
+            docker run -d -p 8080:80 --name enmsgo_landing_page_container digitalizr/enmsgo_landing_page:0.1
           EOF
-
-   
