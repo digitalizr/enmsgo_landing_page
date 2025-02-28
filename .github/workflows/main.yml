@@ -44,12 +44,13 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
 
-      # New step: SSH into EC2 and deploy Docker container
       - name: SSH into EC2 and deploy Docker image
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
-            docker pull digitalizr/enmsgo_landing_page:0.1
+            docker pull digitalizr/enmsgo_landing_page:0.1 && echo "Image pulled successfully" || echo "Image pull failed"
             docker stop enmsgo_landing_page_container || true
             docker rm enmsgo_landing_page_container || true
             docker run -d -p 8080:80 --name enmsgo_landing_page_container digitalizr/enmsgo_landing_page:0.1
+            docker ps -a
           EOF
+        
